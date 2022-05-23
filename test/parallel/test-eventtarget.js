@@ -21,6 +21,7 @@ const delay = promisify(setTimeout);
 
 // The globals are defined.
 ok(Event);
+ok(CustomEvent);
 ok(EventTarget);
 
 // The warning event has special behavior regarding attaching listeners
@@ -127,6 +128,14 @@ let asyncTest = Promise.resolve();
 {
   const ev = new Event('foo');
   deepStrictEqual(Object.keys(ev), ['isTrusted']);
+}
+{
+  const ev = new CustomEvent('foo');
+  strictEqual(ev.detail, null);
+}
+{
+  const ev = new CustomEvent('foo', { detail: { name: 'bar' } });
+  strictEqual(ev.detail.name, 'bar');
 }
 {
   const eventTarget = new EventTarget();
